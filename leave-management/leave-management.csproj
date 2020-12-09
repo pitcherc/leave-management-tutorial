@@ -6,7 +6,6 @@
     <RootNamespace>leave_management</RootNamespace>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Custom' " />
   <ItemGroup>
     <None Update="app.db" CopyToOutputDirectory="PreserveNewest" ExcludeFromSingleFile="true" />
   </ItemGroup>
@@ -20,4 +19,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="3.1.10" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Contacts\" />
+    <Folder Include="Repositories\" />
+  </ItemGroup>
 </Project>
