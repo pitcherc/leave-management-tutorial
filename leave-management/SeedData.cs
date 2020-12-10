@@ -1,4 +1,5 @@
 ﻿using System;
+using leave_management.Data;
 using Microsoft.AspNetCore.Identity;
 
 namespace leave_management
@@ -6,7 +7,7 @@ namespace leave_management
     public static class SeedData
     {
         public static void Seed(
-            UserManager<IdentityUser> userManager,
+            UserManager<Employee> userManager,
             RoleManager<IdentityRole> roleManager
         ) {
             SeedRoles(roleManager);
@@ -14,12 +15,12 @@ namespace leave_management
         }
 
         private static void SeedUsers(
-            UserManager<IdentityUser> userManager
+            UserManager<Employee> userManager
         )
         {
             if (userManager.FindByNameAsync("admin").Result == null)
             {
-                var user = new IdentityUser { UserName = "admin@localhost", Email = "admin@localhost" };
+                var user = new Employee { UserName = "admin@localhost", Email = "admin@localhost" };
                 var result = userManager.CreateAsync(user, "P@ssword1").Result;
 
                 if (result.Succeeded)
