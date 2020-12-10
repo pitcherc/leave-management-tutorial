@@ -1,5 +1,6 @@
 using System;
 using leave_management.Areas.Identity.Data;
+using leave_management.Data;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
@@ -19,8 +20,9 @@ namespace leave_management.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("IdentityDataContextConnection")));
 
-                services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddEntityFrameworkStores<IdentityDataContext>();
+                services.AddDefaultIdentity<IdentityUser>()
+                    .AddRoles<IdentityRole>()
+                    .AddEntityFrameworkStores<ApplicationDbContext>();
             });
         }
     }

@@ -29,4 +29,13 @@
     <Folder Include="Data\Mappings\" />
     <Folder Include="Views\LeaveTypes\" />
   </ItemGroup>
+  <ItemGroup>
+    <Content Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\Lockout.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\ForgotPasswordConfirmation.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\Login.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\LoginWith2fa.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\Logout.cshtml" />
+    <Content Remove="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
+  </ItemGroup>
 </Project>
