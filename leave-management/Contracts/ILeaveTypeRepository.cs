@@ -2,7 +2,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace leave_management.Contacts
+namespace leave_management.Contracts
 {
     public interface ILeaveTypeRepository : IRepositoryBase<LeaveType>
     {

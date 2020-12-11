@@ -1,4 +1,4 @@
-﻿using leave_management.Contacts;
+﻿using leave_management.Contracts;
 using leave_management.Data;
 using System;
 using System.Collections.Generic;

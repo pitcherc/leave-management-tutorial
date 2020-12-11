@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace leave_management.Contacts
+namespace leave_management.Contracts
 {
     public interface IRepositoryBase<T> where T : class
     {

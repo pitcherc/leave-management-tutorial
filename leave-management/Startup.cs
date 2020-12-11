@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using leave_management.Data;
 using leave_management.Repositories;
-using leave_management.Contacts;
+using leave_management.Contracts;
 using leave_management.Data.Mappings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
