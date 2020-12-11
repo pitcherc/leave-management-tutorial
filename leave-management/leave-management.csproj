@@ -24,7 +24,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Contacts\" />
+    <Folder Include="Contracts\" />
     <Folder Include="Repositories\" />
     <Folder Include="Data\Mappings\" />
     <Folder Include="Views\LeaveTypes\" />
