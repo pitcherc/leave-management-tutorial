@@ -1,4 +1,4 @@
-using AutoMapper;
+﻿using AutoMapper;
 using leave_management.Data;
 using leave_management.Repositories;
 using leave_management.Contacts;
@@ -36,7 +36,7 @@ namespace leave_management
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddScoped<ILeaveAllocationRepository, LeaveAllocationRepository>();
-            services.AddScoped<ILeaveHistoryRepository, LeaveHistoryRepository>();
+            services.AddScoped<ILeaveRequestRepository, LeaveRequestRepository>();
             services.AddScoped<ILeaveTypeRepository, LeaveTypeRepository>();
 
             services.AddAutoMapper(typeof(Maps));

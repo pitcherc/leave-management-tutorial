@@ -5,9 +5,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace leave_management.Models
 {
-    public class LeaveHistoryViewModel
+    public class LeaveRequestViewModel
     {
-        public LeaveHistoryViewModel()
+        public LeaveRequestViewModel()
         {
         }
 
