@@ -81,9 +81,17 @@ namespace leave_management.Controllers
         }
 
         // GET: LeaveAllocations/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(string id)
         {
-            return View();
+            var employee = _mapper.Map<EmployeeViewModel>(_userManager.FindByIdAsync(id).Result);
+            var allocations = _mapper.Map<List<LeaveAllocationViewModel>>(_leaveAllocationRepo.GetLeaveAllocationsByEmployee(id));
+            var model = new ViewLeaveAllocaitonViewModel
+            {
+                Employee = employee,
+                LeaveAllocaitons = allocations
+            };
+
+            return View(model);
         }
 
         // GET: LeaveAllocations/Create
@@ -112,19 +120,36 @@ namespace leave_management.Controllers
         // GET: LeaveAllocations/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var model = _mapper.Map<EditLeaveAllocationViewModel>(_leaveAllocationRepo.FindById(id));
+
+            return View(model);
         }
 
         // POST: LeaveAllocations/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(EditLeaveAllocationViewModel model)
         {
             try
             {
-                // TODO: Add update logic here
+                if (!ModelState.IsValid)
+                {
+                    return View(model);
+                }
 
-                return RedirectToAction(nameof(Index));
+                var record = _leaveAllocationRepo.FindById(model.Id);
+                record.NumberOfDays = model.NumberOfDays;
+
+                var isSuccessful = _leaveAllocationRepo.Update(record);
+
+                if (!isSuccessful)
+                {
+                    ModelState.AddModelError("", "Error while saving...");
+
+                    return View(model);
+                }
+
+                return RedirectToAction(nameof(Details), new { id = record.EmployeeId });
             }
             catch
             {
