@@ -15,22 +15,20 @@
     <link rel="stylesheet" href="~/css/adminlte.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
-<body>
-    <partial name="_NavbarPartial" />
-    <partial name="_SidebarPartial" />
-
-    <!-- Content Wrapper. Contains page content -->
-    <main class="content-wrapper">
-        <div class="content">
-            <div class="container-fluid">
+<body class="hold-transition login-page">
+    <div class="login-box">
+        @* <div class="login-logo">
+            <a href="../../index2.html"><b>Admin</b>LTE</a>
+        </div> *@
+        <!-- /.login-logo -->
+        <div class="card">
+            <div class="card-body login-card-body">
                 @RenderBody()
             </div>
+            <!-- /.login-card-body -->
         </div>
-    </main>
-
-    <footer class="main-footer">
-        &copy; @DateTime.Now.Year - Leave Management - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-    </footer>
+    </div>
+    <!-- /.login-box -->
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>

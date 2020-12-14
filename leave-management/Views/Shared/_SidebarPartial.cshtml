@@ -1,0 +1,76 @@
+﻿@using Microsoft.AspNetCore.Identity
+@using leave_management.Data
+@inject SignInManager<Employee> SignInManager
+@inject UserManager<Employee> UserManager
+
+<!-- Main Sidebar Container -->
+<aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <!-- Brand Logo -->
+    <a href="index3.html" class="brand-link">
+        <span class="brand-text font-weight-light">Leave Management</span>
+    </a>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <!-- Sidebar Menu -->
+        <nav class="mt-2">
+            <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
+                <li class="nav-item">
+                    <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">
+                        <i class="nav-icon fas fa-circle"></i>
+                        Home
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="LeaveRequests" asp-action="Create">
+                        <i class="nav-icon fas fa-circle"></i>
+                        Apply For Leave
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" asp-controller="LeaveRequests" asp-action="MyLeave">
+                        <i class="nav-icon fas fa-circle"></i>
+                        My Leave
+                    </a>
+                </li>
+                @if (SignInManager.IsSignedIn(User) && User.IsInRole("Administrator"))
+                {
+                    <li class="nav-item">
+                        <a href="#" class="nav-link">
+                            <i class="nav-icon fas fa-circle"></i>
+                            Manage
+                        </a>
+                        <ul class="nav nav-treeview">
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="LeaveTypes" asp-action="Index">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    Leave Types
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="LeaveAllocations" asp-action="Index">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    Leave Allocations
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="LeaveRequests" asp-action="Index">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    Leave Requests
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-controller="LeaveAllocations" asp-action="ListEmployees">
+                                    <i class="far fa-circle nav-icon"></i>
+                                    Employees
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+                }
+            </ul>
+        </nav>
+        <!-- /.sidebar-menu -->
+    </div>
+<!-- /.sidebar -->
+</aside>
