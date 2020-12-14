@@ -39,5 +39,6 @@
     <Content Remove="Areas\Identity\Pages\Account\LoginWith2fa.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\Logout.cshtml" />
     <Content Remove="Areas\Identity\Pages\Account\Manage\_Layout.cshtml" />
+    <Content Remove="Views\LeaveRequests\Details.cshtml" />
   </ItemGroup>
 </Project>

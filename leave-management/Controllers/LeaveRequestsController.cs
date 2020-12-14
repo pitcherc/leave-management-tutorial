@@ -55,10 +55,82 @@ namespace leave_management.Controllers
             return View(model);
         }
 
+        public ActionResult MyLeave()
+        {
+            var user = _userManager.GetUserAsync(User).Result;
+            var leaveRequests = _leaveRequestRepo.GetLeaveRequestsByEmployee(user.Id);
+            var leaveRequestsModel = _mapper.Map<List<LeaveRequestViewModel>>(leaveRequests);
+            var leaveAllocations = _leaveAllocationRepo.GetLeaveAllocationsByEmployee(user.Id);
+            var leaveAllocationsModel = _mapper.Map<List<LeaveAllocationViewModel>>(leaveAllocations);
+            var model = new EmployeeLeaveRequestViewModel
+            {
+                LeaveAllocations = leaveAllocationsModel,
+                LeaveRequests = leaveRequestsModel
+            };
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Administrator")]
         // GET: LeaveRequests/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            var leaveRequest = _leaveRequestRepo.FindById(id);
+            var model = _mapper.Map<LeaveRequestViewModel>(leaveRequest);
+
+            return View(model);
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult ApproveRequest(int id)
+        {
+            try
+            {
+                var leaveRequest = _leaveRequestRepo.FindById(id);
+                var user = _userManager.GetUserAsync(User).Result;
+                var employeeId = leaveRequest.RequestingEmployeeId;
+                var allocation = _leaveAllocationRepo.GetLeaveAllocationsByEmployeeAndType(employeeId, leaveRequest.LeaveTypeId);
+                var daysRequested = (int)(leaveRequest.EndDate - leaveRequest.StartDate).TotalDays;
+
+                leaveRequest.Approved = true;
+                leaveRequest.ApprovedById = user.Id;
+                leaveRequest.DateActioned = DateTime.Now;
+
+                allocation.NumberOfDays -= daysRequested;
+
+                var isSuccessful = _leaveRequestRepo.Update(leaveRequest);
+
+                if (isSuccessful)
+                {
+                    _leaveAllocationRepo.Update(allocation);
+                }
+            }
+            catch
+            {
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        [Authorize(Roles = "Administrator")]
+        public ActionResult RejectRequest(int id)
+        {
+            try
+            {
+                var leaveRequest = _leaveRequestRepo.FindById(id);
+                var user = _userManager.GetUserAsync(User).Result;
+
+                leaveRequest.Approved = false;
+                leaveRequest.ApprovedById = user.Id;
+                leaveRequest.DateActioned = DateTime.Now;
+
+                _leaveRequestRepo.Update(leaveRequest);
+            }
+            catch
+            {
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: LeaveRequests/Create
@@ -125,6 +197,7 @@ namespace leave_management.Controllers
                     StartDate = model.StartDate,
                     EndDate = model.EndDate,
                     Approved = null,
+                    Cancelled = false,
                     DateRequested = DateTime.Now,
                     DateActioned = DateTime.Now
                 };
@@ -170,6 +243,31 @@ namespace leave_management.Controllers
             {
                 return View();
             }
+        }
+
+        public ActionResult CancelRequest(int id)
+        {
+            try
+            {
+                var leaveRequest = _leaveRequestRepo.FindById(id);
+
+                if (leaveRequest.Approved != null)
+                {
+                    ModelState.AddModelError("", "Cannot cancel a request that is not pending.");
+
+                    return RedirectToAction(nameof(MyLeave));
+                }
+
+                leaveRequest.Cancelled = true;
+
+                _leaveRequestRepo.Update(leaveRequest);
+            }
+            catch
+            {
+                ModelState.AddModelError("", "Something went wrong...");
+            }
+
+            return RedirectToAction(nameof(MyLeave));
         }
 
         // GET: LeaveRequests/Delete/5

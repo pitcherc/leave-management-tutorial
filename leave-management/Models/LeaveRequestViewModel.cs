@@ -13,6 +13,7 @@ namespace leave_management.Models
 
         public int Id { get; set; }
 
+        [Display(Name = "Requesting Employee")]
         public EmployeeViewModel RequestingEmployee { get; set; }
         public string RequestingEmployeeId { get; set; }
 
@@ -24,6 +25,7 @@ namespace leave_management.Models
         [Display(Name = "End Date")]
         public DateTime EndDate { get; set; }
 
+        [Display(Name = "Leave Type")]
         public LeaveTypeViewModel LeaveType { get; set; }
         public int LeaveTypeId { get; set; }
 
@@ -35,6 +37,9 @@ namespace leave_management.Models
 
         [Display(Name = "Approval Status")]
         public bool? Approved { get; set; }
+
+        [Display(Name = "Cancel")]
+        public bool Cancelled { get; set; }
 
         public EmployeeViewModel ApprovedBy { get; set; }
         public string ApprovedById { get; set; }
@@ -55,6 +60,13 @@ namespace leave_management.Models
 
         [Display(Name = "Rejected Requests")]
         public int RejectedRequests { get; set; }
+
+        public List<LeaveRequestViewModel> LeaveRequests { get; set; }
+    }
+
+    public class EmployeeLeaveRequestViewModel
+    {
+        public List<LeaveAllocationViewModel> LeaveAllocations { get; set; }
 
         public List<LeaveRequestViewModel> LeaveRequests { get; set; }
     }

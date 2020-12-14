@@ -33,6 +33,7 @@ namespace leave_management.Repositories
         public ICollection<LeaveRequest> FindAll()
         {
             return _db.LeaveRequests
+                .Where(q => q.Cancelled == false)
                 .Include(q => q.RequestingEmployee)
                 .Include(q => q.ApprovedBy)
                 .Include(q => q.LeaveType)
@@ -46,6 +47,14 @@ namespace leave_management.Repositories
                 .Include(q => q.ApprovedBy)
                 .Include(q => q.LeaveType)
                 .FirstOrDefault(q => q.Id == id);
+        }
+
+        public ICollection<LeaveRequest> GetLeaveRequestsByEmployee(string id)
+        {
+            return _db.LeaveRequests
+                .Where(q => q.RequestingEmployeeId == id)
+                .Include(q => q.LeaveType)
+                .ToList();
         }
 
         public bool isExists(int id)
