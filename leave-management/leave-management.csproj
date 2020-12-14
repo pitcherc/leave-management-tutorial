@@ -29,6 +29,7 @@
     <Folder Include="Data\Mappings\" />
     <Folder Include="Views\LeaveTypes\" />
     <Folder Include="Views\LeaveAllocations\" />
+    <Folder Include="Views\LeaveRequests\" />
   </ItemGroup>
   <ItemGroup>
     <Content Remove="Areas\Identity\Pages\Account\ForgotPassword.cshtml" />
