@@ -1,23 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Linq.Expressions;
 using System.Threading.Tasks;
 
 namespace leave_management.Contracts
 {
     public interface IRepositoryBase<T> where T : class
     {
-        Task<ICollection<T>> FindAll();
+        Task<IList<T>> FindAll(
+            Expression<Func<T, bool>> expression = null,
+            Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+            List<string> includes = null
+        );
 
-        Task<T> FindById(int id);
+        Task<T> Find(
+            Expression<Func<T, bool>> expression,
+            List<string> includes = null
+        );
 
-        Task<bool> isExists(int id);
+        Task<bool> isExists(
+            Expression<Func<T, bool>> expression = null
+        );
 
-        Task<bool> Create(T entity);
+        Task Create(T entity);
 
-        Task<bool> Update(T entity);
+        void Update(T entity);
 
-        Task<bool> Delete(T entity);
+        void Delete(T entity);
 
-        Task<bool> Save();
+        //Task<bool> Save();
     }
 }
